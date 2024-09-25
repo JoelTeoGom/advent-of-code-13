@@ -27,17 +27,18 @@ func isMirror(row1, row2 []string) bool {
 // Function to find mirrors in rows (horizontal)
 func horizontal(puzzle *Puzzle, sumarize *int, nPuzzle int) {
 	fmt.Println("Horizontal [", nPuzzle, "]")
-
+	puzzle.Reflection = 0
 	for i := 0; i < puzzle.Row-1; i++ { // -1 to avoid index out of range
 		//fmt.Println(puzzle.data[i])
 		if isMirror(puzzle.data[i], puzzle.data[i+1]) {
 			puzzle.Reflection = i + 1
+			*sumarize = *sumarize + (puzzle.Reflection * 100)
 			fmt.Printf("Found a mirror in rows %d and %d\n", i, i+1)
+			fmt.Println("Suma horizontal: ", *sumarize)
+			break
 		}
 	}
 
-	*sumarize = *sumarize + (puzzle.Reflection * 100)
-	//fmt.Println("Suma horizontal: ", *sumarize)
 }
 
 // Function to find mirrors in columns (vertical)
@@ -59,11 +60,12 @@ func vertical(puzzle *Puzzle, sumarize *int, nPuzzle int) {
 		if isMirror(column[i], column[i+1]) {
 			puzzle.Reflection = i + 1
 			fmt.Printf("Found a mirror in columns %d and %d\n", i, i+1)
+			*sumarize += puzzle.Reflection
+			fmt.Println("Suma vertical: ", *sumarize)
+			break
 		}
 	}
-	*sumarize += puzzle.Reflection
 
-	//fmt.Println("Suma vertical: ", *sumarize)
 }
 
 func readfile(sumarize *int, puzzle *Puzzle, filename string) {
